@@ -1,40 +1,35 @@
-# mxg-vue3-elementplus
+### 导入报错： import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
-This template should help get you started developing with Vue 3 in Vite.
+- 报错现象：
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```
+    无法找到模块“element-plus/dist/locale/zh-cn.mjs”的声明文件。
+    “node_modules/element-plus/dist/locale/zh-cn.mjs”隐式拥有 "any" 类型。
+    如果“element-plus”包实际公开了此模块，请尝试添加包含 `declare module‘element-plus/dist/locale/zh-cn.mjs';` 的新声明(.d.ts)文件ts(7016)
 ```
 
-### Compile and Hot-Reload for Development
+- 两种解决办法
 
-```sh
-npm run dev
-```
+1. 加入注解 // @ts-ignore
 
-### Type-Check, Compile and Minify for Production
+2. 在 env.d.ts 中进行声明 declare module 'element-plus/dist/locale/zh-cn.mjs'
 
-```sh
-npm run build
+### vite.config.ts 配置
+
+```js
+export default defineConfig({
+  // base: "mxg", // 这个base 提现在  http://localhost:5173/mxg
+  // 开发环境有效（生产环境无效）
+  server: {
+    open: true, // 启动项目自动打开浏览器
+    port: 8080, // 端口号
+    host: "0.0.0.0", // host: 如果写localhost只能本机访问这个项目，如果是0.0.0.0开放给所有的ip访问此项目
+  },
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});
 ```

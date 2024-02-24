@@ -1,0 +1,4 @@
+// elementPlus全局样式
+@import 'element-plus/dist/index.css';
+// 自定义样式放在下面，如果有相同的样式会覆盖elementPlus原样式
+@import './app.scss';
