@@ -72,3 +72,27 @@ const props = withDefaults(
   }
 );
 ```
+
+### 5. 自行扩展 axios 返回的数据类型 axios.d.ts
+- **注意：declare 定义的接口类型，在 SRC 和 ts 文件中不需要导入，相当于全局接口，直接引用接口类型**
+- 在src/types/axios.d.ts下编写以下代码
+```js
+import * as axios from 'axios'
+
+// 自行扩展 axios 返回的数据类型
+declare module 'axios' {
+    export interface AxiosResponse<T = any> {
+        code: number;
+        message: string;
+        data: T
+    }
+}
+```
+
+- 在tsconfig.app.json中 include配置项中增加 "src/**/*.d.ts"
+
+```json
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.d.ts"], // src里面所有内容都支持ts语法
+```
+
+- **注意：添加后，重启编辑器VsCode，不然可能无法识别到 *.d.ts 文件**
