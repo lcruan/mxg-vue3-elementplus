@@ -1,4 +1,4 @@
-### 导入报错： import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+### 1. 导入报错： import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 - 报错现象：
 
@@ -14,7 +14,7 @@
 
 2. 在 env.d.ts 中进行声明 declare module 'element-plus/dist/locale/zh-cn.mjs'
 
-### vite.config.ts 配置
+### 2. vite.config.ts 配置
 
 ```js
 export default defineConfig({
@@ -32,4 +32,43 @@ export default defineConfig({
     },
   },
 });
+```
+
+### 3. 渲染函数的使用
+
+- h() 是 hyperscript 的简称——意思是“能生成 HTML (超文本标记语言) 的 JavaScript”
+
+```html
+<render />
+```
+
+```js
+const render = () => {
+  // props的name可选存在的时候，时ele开头的
+  if (props.name?.startsWith("ele-")) {
+    return h(
+      resolveComponent("el-icon"),
+      { color: props.color, size: props.size },
+      () => h(resolveComponent(props.name))
+    );
+  } else {
+    return h("i");
+  }
+};
+```
+
+### 4. props 结合 ts 写法
+
+```js
+const props = withDefaults(
+  defineProps<{
+    name?: string; // 图标名称 `ele-` 开头为 elementPlus 图标
+    size?: number; // 图标颜色
+    color?: string; // 图标大小
+  }>(),
+  {
+    name: "",
+    size: 18,
+  }
+);
 ```
