@@ -35,6 +35,12 @@ async function  loadData2() {
     console.log('loadData2.error', error);
   }
 }
+
+// `development`开发环境，production 生产环境
+console.log('当前是什么环境', import.meta.env.MODE);
+
+console.log('获取自定义环境配置', import.meta.env.VITE_USERNAME, import.meta.env.DB_PASSWORD);
+
 </script>
 
 <template>

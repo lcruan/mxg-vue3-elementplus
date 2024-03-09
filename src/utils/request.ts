@@ -5,7 +5,8 @@ import { ElMessage } from "element-plus";
 const request: AxiosInstance = axios.create({
     // 基础 url，复制 easymock 创建的服务接口基础路径，发送每个接口，都会带上这个 url
     // baseURL: 'https://mock.mengxuegu.com/mock/65dabf3b351bbd02cf339fc8/mxg-vue3-elementplus',
-    baseURL: '/dev-api',
+    // baseURL: '/dev-api',
+    baseURL: import.meta.env.VITE_APP_BASE_API as string,
     timeout: 20000
 })
 
